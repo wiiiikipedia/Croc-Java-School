@@ -17,25 +17,8 @@ public class Application {
     }
 
     private static String removeJavaComments(String source) {
-        StringBuilder builder = new StringBuilder();
-        boolean temp = false;
-        for (int i = 1; i < source.length(); i++) {
-            if ((int) source.charAt(i-1) == 47 && (int) source.charAt(i) == 42) { // коммент типа /* */
-                if (!builder.isEmpty()) builder.deleteCharAt(builder.length()-1);
-                while (!temp && i < source.length()) {
-                    i++;
-                    if ((int) source.charAt(i-1) == 42 && (int) source.charAt(i) == 47) temp = true;
-                }
-                temp = false;
-            } else if ((int) source.charAt(i-1) == 47 && (int) source.charAt(i) == 47) { // Коммент типа //
-                if (!builder.isEmpty()) builder.deleteCharAt(builder.length()-1);
-                while (!temp && i < source.length()) {
-                    i++;
-                    if ((int) source.charAt(i-1) == 10 && (int) source.charAt(i) == 32) temp = true;
-                }
-                temp = false;
-            } else builder.append(source.charAt(i));
-        }
-        return builder.toString();
+        source = source.replaceAll("/\\*([\\S\\s]+?)\\*/", ""); // Убираем комментарии типа /* */
+        source = source.replaceAll("[^\\\"]\\/\\/.*", ""); // Убираем комментарии типа //
+        return source;
     }
 }
