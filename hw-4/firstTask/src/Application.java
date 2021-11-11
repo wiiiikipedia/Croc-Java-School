@@ -17,11 +17,15 @@ public class Application {
             String line;
             int count = 0;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                String [] s = line.split(" ");
+                //System.out.println(line);
+                line = line.trim();
+                String[] s = line.split("[ ,.?!@#$%^&*()№:;]");
+                //лучше .split("\\W") но это прям совсем какие-то читкоды не  уверена что можно юзать
                 for (String str : s)
-                    if (str != "") ++count;
+                    if (str != "" && !str.isEmpty()) ++count;
+
             }
+
             System.out.println(count);
         } catch (IOException e) {
             e.printStackTrace();
