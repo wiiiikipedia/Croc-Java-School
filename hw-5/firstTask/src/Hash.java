@@ -3,6 +3,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash implements  Runnable{
 
+    boolean flag = true;
     public  String trueHash;
     public static String hash = "";
     public static String password = "";
@@ -36,25 +37,36 @@ public class Hash implements  Runnable{
     }
 
     public void run(String s) {
-        if (!password.isEmpty()) {
-            System.out.println(password);
-            //return;
-            System.exit(0);
-        }
+            //while (flag)
 
-        if (s.length() == 7) {
-            String ans = hashPassword(s);
-            if (ans.equals(trueHash)) {
-                hash = ans;
-                password = s;
-            }
+
+                if (!password.isEmpty()) {
+                    System.out.println(password);
+                    //return;
+                    System.exit(0);
+                }
+
+                if (s.length() == 2) {
+                    String ans = hashPassword(s);
+                    if (ans.equals(trueHash)) {
+                        hash = ans;
+                        password = s;
+                        flag = false;
+                        //return;
+                    }
+                    else {
+                        s = s.substring(0, s.length() - 1); //перебираем символы для последнего символа
+                        for (char l : letters) {
+                            run(s + l);
+                        }
+                    }
+                }
+                if (flag) {
+                    for (char l : letters) {
+                        run(s + l);
+                    }
+                }
+
             return;
-        }
-
-        for (char l : letters) {
-            run(s + l);
-        }
-
     }
-
 }
